@@ -1,0 +1,33 @@
+  -- create a test set to test the BigQuery2Datastore template for Dataflow
+  --
+  -- Additional documentation
+  -- https://cloud.google.com/bigquery/docs/reference/standard-sql/functions-and-operators#casting
+
+with baseSet as (SELECT
+  "1" as id,
+  CAST("Test String" AS STRING) AS tstString,
+  CAST(1   AS INT64) AS tstInteger,
+  CAST(1   AS NUMERIC) AS tstNumeric,
+  CAST(1.1 AS FLOAT64) AS tstFloat,
+  CAST(true   AS BOOLEAN) AS tstBoolean,
+  CAST("Test Bytes" AS BYTES) AS tstBytes,
+  CAST("2018-2-1" AS DATE) AS tstDate,
+  CAST("2018-2-1 12:14:06" AS DATETIME) AS tstDateTime,
+  CAST("12:14:06" AS TIME) AS tstTime,
+  CAST("2018-2-1 12:14:06" AS TIMESTAMP) AS tstTimeStamp,
+  CAST("2018-2-1 12:14:06" AS TIMESTAMP) AS lastModified)   
+ 
+  Select
+        baseSet.*,
+        [baseSet.tstString,baseSet.tstString,baseSet.tstString] AS tstArrayOfString,
+        [baseSet.tstInteger,baseSet.tstInteger,baseSet.tstInteger] AS tstArrayOfInteger,
+        [baseSet.tstNumeric,baseSet.tstNumeric,baseSet.tstNumeric] AS tstArrayOfNumeric,
+        [baseSet.tstFloat,baseSet.tstFloat,baseSet.tstFloat] AS tstArrayOfFloat,
+        [baseSet.tstBoolean,baseSet.tstBoolean,baseSet.tstBoolean] AS tstArrayOfBoolean,
+        [baseSet.tstBytes,baseSet.tstBytes,baseSet.tstBytes] AS tstArrayOfByte,
+        [baseSet.tstDate,baseSet.tstDate,baseSet.tstDate] AS tstArrayOfDate,
+        [baseSet.tstDateTime,baseSet.tstDateTime,baseSet.tstDateTime] AS tstArrayOfDateTime,
+        [baseSet.tstTime,baseSet.tstTime,baseSet.tstTime] AS tstArrayOfTime,
+        [baseSet.tstTimeStamp,baseSet.tstTimeStamp,baseSet.tstTimeStamp] AS tstArrayOfTimestamp,
+        ([baseSet, baseSet, baseSet, baseSet]) as tstRecord
+  from baseSet
